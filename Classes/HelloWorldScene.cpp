@@ -117,11 +117,22 @@ bool HelloWorld::init()
     //}
 
 	//テクスチャファイル名を指定して、スプライトを作成
-	Sprite*sprite = Sprite::create("0682.png");
+    sprite = Sprite::create("ebi.png");
 	//sceneグラフにつなぐ
 	this->addChild(sprite);
+	//sprite->setPosition(Vec2(650, 380));
+	sprite->setScale(0.25f, 0.25f);
+	sprite->setPosition(Vec2(1130, 620));
+	sprite->setColor(Color3B(255, 255, 255));
+	sprite->setOpacity(255);
 
+	//Updateを有効にする
+	this->scheduleUpdate();
 
+	//counter = 0;
+
+	//どちらに移動中か0←123
+	state = 0;
     return true;
 }
 
@@ -137,4 +148,60 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 
 
+}
+
+void HelloWorld::update(float delta)
+{
+	Vec2 pos;
+	switch (state)
+	{
+	case 0:
+		pos = sprite->getPosition();
+		pos -= Vec2(3.0f, 0);
+		sprite->setPosition(pos);
+		if (pos.x<=140)
+		{
+			state = 1;
+		}
+		break;
+
+	case 1:
+		pos = sprite->getPosition();
+		pos -= Vec2(0, 3.0f);
+		sprite->setPosition(pos);
+		if (pos.y <= 90)
+		{
+			state = 2;
+		}
+		break;
+	case 2:
+		pos = sprite->getPosition();
+		pos += Vec2(3.0f, 0);
+		sprite->setPosition(pos);
+		if (pos.x >= 1135)
+		{
+			state = 3;
+		}
+		break;
+	default:
+		pos = sprite->getPosition();
+		pos += Vec2(0, 3.0f);
+		sprite->setPosition(pos);
+		if (pos.y >= 620)
+		{
+			state = 0;
+		}
+		break;
+
+	}
+	//ここに更新処理
+
+	//counter++;
+	/*time++;
+	if (time < 300)
+	{
+		float x = sprite->getOpacity();
+		x -= 1;
+		sprite->setOpacity(x);
+	}*/
 }
