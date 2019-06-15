@@ -118,13 +118,28 @@ bool HelloWorld::init()
 
 	//テクスチャファイル名を指定して、スプライトを作成
     sprite = Sprite::create("ebi.png");
+	//sprite = Sprite::create("sample01.png");
 	//sceneグラフにつなぐ
 	this->addChild(sprite);
-	//sprite->setPosition(Vec2(650, 380));
+	sprite->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0));
 	sprite->setScale(0.25f, 0.25f);
-	sprite->setPosition(Vec2(1130, 620));
+	//sprite->setScale(3.0f, 3.0f);
+	//sprite->setPosition(Vec2(1130, 620));
+	//f,
 	sprite->setColor(Color3B(255, 255, 255));
 	sprite->setOpacity(255);
+
+	//画像の左下が(0,0)
+	//画像の右上が(1,0)
+	//基準点を指定する
+	//sprite->setAnchorPoint(Vec2(1.0f, 0.0f));
+
+	//sprite->setRotation(45.0f);
+
+	//sprite->setFlippedX(true);
+	//sprite->setTextureRect(Rect(302, 53, 460, 600));
+
+	//sprite->setTextureRect(Rect(0, 0, 32, 40));
 
 	//Updateを有効にする
 	this->scheduleUpdate();
@@ -153,7 +168,7 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 void HelloWorld::update(float delta)
 {
 	Vec2 pos;
-	switch (state)
+	/*switch (state)
 	{
 	case 0:
 		pos = sprite->getPosition();
@@ -193,15 +208,65 @@ void HelloWorld::update(float delta)
 		}
 		break;
 
-	}
+	}*/
 	//ここに更新処理
 
-	//counter++;
-	/*time++;
-	if (time < 300)
+//	//counter++;
+//	time++;
+//	if (time < 300)
+//	{
+//		//float x = sprite->getOpacity();
+//		//x -= 1;
+//		float y = 0.5f;
+//		y += y + 0.5f;
+//		//sprite->setOpacity(x);
+//		sprite->setColor(Color3B(255-y,0,0+y));
+//
+//	}
+	//float x = sprite->getOpacity();
+	//if (time == 0)
+	//{
+	//	x -= 1;
+	//}
+	//else
+	//{
+	//	x += 1;
+	//}
+	//sprite->setOpacity(x);
+	//if (x < 0)
+	//{
+	//	sprite = Sprite::create("snake.png");
+	//	sprite->setOpacity(0);
+	//	time = 1;
+	//}
+	//else if (x > 255)
+	//{
+	//	sprite = Sprite::create("ebi.png");
+	//	sprite->setOpacity(255);
+	//	time = 0;
+	//}
+	switch (state)
 	{
-		float x = sprite->getOpacity();
-		x -= 1;
-		sprite->setOpacity(x);
-	}*/
+	case 0:
+		pos = sprite->getPosition();
+		pos -= Vec2(3.0f, 0);
+		sprite->setFlippedX(false);
+		sprite->setPosition(pos);
+		if (pos.x <= 140)
+		{
+			state = 2;
+		}
+		break;
+
+	case 2:
+		pos = sprite->getPosition();
+		pos += Vec2(3.0f, 0);
+		sprite->setFlippedX(true);
+		sprite->setPosition(pos);
+		if (pos.x >= 1135)
+		{
+			state = 0;
+		}
+		break;
+	}
 }
