@@ -42,8 +42,11 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 
+
 	cocos2d::Sprite*sprite;
-	int time;
+	cocos2d::Sprite*sprite2;
+//	cocos2d::Sprite* sprite[100];
+	int timer;
 	int counter;
 
 	int state;

@@ -101,8 +101,11 @@ bool HelloWorld::init()
         this->addChild(label, 1);
     }
 
+
+	
     //// add "HelloWorld" splash screen"
     //auto sprite = Sprite::create("HelloWorld.png");
+
     //if (sprite == nullptr)
     //{
     //    problemLoading("'HelloWorld.png'");
@@ -116,18 +119,69 @@ bool HelloWorld::init()
     //    this->addChild(sprite, 0);
     //}
 
-	//テクスチャファイル名を指定して、スプライトを作成
-    sprite = Sprite::create("ebi.png");
-	//sprite = Sprite::create("sample01.png");
-	//sceneグラフにつなぐ
-	this->addChild(sprite);
-	sprite->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0));
-	sprite->setScale(0.25f, 0.25f);
+	//{//乱数の初期化
+	     //rand(time(nullptr));
+
+		//for (int i = 0; i < 5; i++)
+		//{
+		//	sprite[i] = Sprite::create("ebi.png");
+		//	this->addChild(sprite[i]);
+		//	//テクスチャファイル名を指定して、スプライトを作成
+		//	
+		//}
+	    sprite = Sprite::create("ebi.png");
+	//	//sprite = Sprite::create("sample01.png");
+		//sceneグラフにつなぐ
+		this->addChild(sprite);
+		sprite->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0));
+		sprite->setScale(0.2f, 0.2f);
+
+		MoveTo*action1 = MoveTo::create(2.0f, Vec2(600.0f, 300.0f));
+		JumpTo*action2 = JumpTo::create(0.5f, Vec2(100.0f, 100.0f), 100.0f, 1);
+		RepeatForever*action3 = RepeatForever::create(action1);
+		//TintTo*action3 = TintTo::create(2.0f, Color3B(255, 255, 0));
+		//Spawn*action4 = Spawn::create(action2, action3, nullptr);
+		Sequence*action4 = Sequence::create(action1, action3, nullptr);
+		DelayTime*action6 = DelayTime::create(3);
+		ToggleVisibility*action7 = ToggleVisibility::create();
+		//Repeat*action2 = Repeat::create(action1, 8);
+		sprite->runAction(action4);
+
+
+	//	MoveBy*action1 = MoveBy::create(1.0f, Vec2(300, 300));
+	//	EaseBackInOut* action2 = EaseBackInOut::create(action1);
+	//	sprite->runAction(action2);
+	//}
+
+	//{
+	//	sprite2 = Sprite::create("snake.png");
+	//	//sprite = Sprite::create("sample01.png");
+	//	//sceneグラフにつなぐ
+	//	this->addChild(sprite2);
+	//	sprite2->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0));
+	//	sprite2->setScale(0.2f, 0.2f);
+
+	//	MoveBy*action1 = MoveBy::create(1.0f, Vec2(-300, -300));
+	//	EaseBackInOut* action2 = EaseBackInOut::create(action1);
+	//	sprite2->runAction(action2);
+	//}
+
+	//ScaleTo* action1 = ScaleTo::create(3.0f, 5.0f);
+	//JumpTo* action1 = JumpTo::create(1.5f, Vec2(200, 100), 500.0f, 3);
+	/*ccBezierConfig conf;
+	conf.controlPoint_1 = Vec2(500, 500);
+	conf.controlPoint_2 = Vec2(500, 100);
+	conf.endPosition = Vec2(200, 100);
+	BezierTo* action1 = BezierTo::create(3.0f, conf);*/
+	//Blink* action1 = Blink::create(2.0, 4);
+	//SkewTo* action1 = SkewTo::create(3.0f, 3.0f, 3.0f);
+
+
 	//sprite->setScale(3.0f, 3.0f);
 	//sprite->setPosition(Vec2(1130, 620));
 	//f,
-	sprite->setColor(Color3B(255, 255, 255));
-	sprite->setOpacity(255);
+	//sprite->setColor(Color3B(255, 255, 255));
+	//sprite->setOpacity(255);
 
 	//画像の左下が(0,0)
 	//画像の右上が(1,0)
@@ -142,131 +196,24 @@ bool HelloWorld::init()
 	//sprite->setTextureRect(Rect(0, 0, 32, 40));
 
 	//Updateを有効にする
-	this->scheduleUpdate();
+	//this->scheduleUpdate();
 
 	//counter = 0;
 
 	//どちらに移動中か0←123
-	state = 0;
+	//state = 0;
+
+
     return true;
 }
 
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
-    //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->end();
-
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() as given above,instead trigger a custom event created in RootViewController.mm as below*/
-
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
-
-
 }
 
 void HelloWorld::update(float delta)
 {
-	Vec2 pos;
-	/*switch (state)
-	{
-	case 0:
-		pos = sprite->getPosition();
-		pos -= Vec2(3.0f, 0);
-		sprite->setPosition(pos);
-		if (pos.x<=140)
-		{
-			state = 1;
-		}
-		break;
 
-	case 1:
-		pos = sprite->getPosition();
-		pos -= Vec2(0, 3.0f);
-		sprite->setPosition(pos);
-		if (pos.y <= 90)
-		{
-			state = 2;
-		}
-		break;
-	case 2:
-		pos = sprite->getPosition();
-		pos += Vec2(3.0f, 0);
-		sprite->setPosition(pos);
-		if (pos.x >= 1135)
-		{
-			state = 3;
-		}
-		break;
-	default:
-		pos = sprite->getPosition();
-		pos += Vec2(0, 3.0f);
-		sprite->setPosition(pos);
-		if (pos.y >= 620)
-		{
-			state = 0;
-		}
-		break;
-
-	}*/
-	//ここに更新処理
-
-//	//counter++;
-//	time++;
-//	if (time < 300)
-//	{
-//		//float x = sprite->getOpacity();
-//		//x -= 1;
-//		float y = 0.5f;
-//		y += y + 0.5f;
-//		//sprite->setOpacity(x);
-//		sprite->setColor(Color3B(255-y,0,0+y));
-//
-//	}
-	//float x = sprite->getOpacity();
-	//if (time == 0)
-	//{
-	//	x -= 1;
-	//}
-	//else
-	//{
-	//	x += 1;
-	//}
-	//sprite->setOpacity(x);
-	//if (x < 0)
-	//{
-	//	sprite = Sprite::create("snake.png");
-	//	sprite->setOpacity(0);
-	//	time = 1;
-	//}
-	//else if (x > 255)
-	//{
-	//	sprite = Sprite::create("ebi.png");
-	//	sprite->setOpacity(255);
-	//	time = 0;
-	//}
-	switch (state)
-	{
-	case 0:
-		pos = sprite->getPosition();
-		pos -= Vec2(3.0f, 0);
-		sprite->setFlippedX(false);
-		sprite->setPosition(pos);
-		if (pos.x <= 140)
-		{
-			state = 2;
-		}
-		break;
-
-	case 2:
-		pos = sprite->getPosition();
-		pos += Vec2(3.0f, 0);
-		sprite->setFlippedX(true);
-		sprite->setPosition(pos);
-		if (pos.x >= 1135)
-		{
-			state = 0;
-		}
-		break;
-	}
 }
