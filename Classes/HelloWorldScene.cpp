@@ -138,10 +138,21 @@ bool HelloWorld::init()
 		sprite->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0));
 		sprite->setScale(0.2f, 0.2f);
 
-		experimental::AudioEngine::play2d("gun.mp3",true);
+		CallFunc* callFunc = CallFunc::create(CC_CALLBACK_0(HelloWorld::myFunction2, this,"snake.png"));
+
+		
+		//指定時間待つ
+		DelayTime*delay = DelayTime::create(3.0f);
+		//連続アクション
+		Sequence*seq = Sequence::create(delay, callFunc, nullptr);
+
+		//experimental::AudioEngine::play2d("gun.mp3");
 		experimental::AudioEngine::play2d("Return to Me.mp3",true);
 
-		audioID = experimental::AudioEngine::play2d("gun.mp3", true);
+		this->runAction(seq);
+
+		//audioID = experimental::AudioEngine::play2d("gun.mp3", true);
+
 		//MoveTo*action1 = MoveTo::create(2.0f, Vec2(600.0f, 300.0f));
 		//JumpTo*action2 = JumpTo::create(0.5f, Vec2(100.0f, 100.0f), 100.0f, 1);
 		//RepeatForever*action3 = RepeatForever::create(action1);
@@ -204,6 +215,8 @@ bool HelloWorld::init()
 	//Updateを有効にする
 	this->scheduleUpdate();
 
+
+
 	//counter = 0;
 
 	//どちらに移動中か0←123
@@ -225,8 +238,38 @@ void HelloWorld::update(float delta)
 	if (counters <= 0)
 	{
 		// 割り振られたオーディオIDを指定して止める
-		experimental::AudioEngine::stopAll();
-		experimental::AudioEngine::play2d("Hollow Crown.mp3", true);
-		counters = 100000000;
+		//experimental::AudioEngine::pause(audioID);
+		//experimental::AudioEngine::stopAll();
+		//experimental::AudioEngine::play2d("Hollow Crown.mp3", true);
+		//counters = 100000000;
 	}
+	
+}
+
+// 任意の自作メンバ関数
+void HelloWorld::myFunction()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	Sprite*spr = Sprite::create("snake.png");
+	sprite->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0));
+	sprite->setScale(0.2f, 0.2f);
+	this->addChild(spr);
+
+	experimental::AudioEngine::stopAll();
+	experimental::AudioEngine::play2d("Hollow Crown.mp3", true);
+}
+
+// 任意の自作メンバ関数
+void HelloWorld::myFunction2(std::string filename)
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	Sprite*spr = Sprite::create(filename);
+	sprite->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0));
+	sprite->setScale(0.2f, 0.2f);
+	this->addChild(spr);
+
+	experimental::AudioEngine::stopAll();
+	experimental::AudioEngine::play2d("Hollow Crown.mp3", true);
 }
