@@ -43,6 +43,7 @@ public:
 
 	void myFunction2(std::string filename);//ŠÖ”éŒ¾
     
+	void myFunction3(int count);
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 

@@ -273,3 +273,17 @@ void HelloWorld::myFunction2(std::string filename)
 	experimental::AudioEngine::stopAll();
 	experimental::AudioEngine::play2d("Hollow Crown.mp3", true);
 }
+
+// ”CˆÓ‚ÌŽ©ìƒƒ“ƒoŠÖ”
+void HelloWorld::myFunction3(int count)
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+//Sprite*spr = Sprite::create();
+	sprite->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0));
+	sprite->setScale(0.2f, 0.2f);
+//	this->addChild(spr);
+
+	experimental::AudioEngine::stopAll();
+	experimental::AudioEngine::play2d("Hollow Crown.mp3", true);
+}
