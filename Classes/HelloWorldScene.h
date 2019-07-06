@@ -47,6 +47,10 @@ public:
 	cocos2d::Sprite*sprite2;
 //	cocos2d::Sprite* sprite[100];
 	int timer;
+
+	int audioID;
+
+	int counters = 60;
 	int counter;
 
 	int state;

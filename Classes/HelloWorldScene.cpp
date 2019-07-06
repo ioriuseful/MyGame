@@ -24,8 +24,10 @@
 
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
+#include "AudioEngine.h"
 
 USING_NS_CC;
+//using namespace experimental;
 
 Scene* HelloWorld::createScene()
 {
@@ -136,16 +138,20 @@ bool HelloWorld::init()
 		sprite->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0));
 		sprite->setScale(0.2f, 0.2f);
 
-		MoveTo*action1 = MoveTo::create(2.0f, Vec2(600.0f, 300.0f));
-		JumpTo*action2 = JumpTo::create(0.5f, Vec2(100.0f, 100.0f), 100.0f, 1);
-		RepeatForever*action3 = RepeatForever::create(action1);
-		//TintTo*action3 = TintTo::create(2.0f, Color3B(255, 255, 0));
-		//Spawn*action4 = Spawn::create(action2, action3, nullptr);
-		Sequence*action4 = Sequence::create(action1, action3, nullptr);
-		DelayTime*action6 = DelayTime::create(3);
-		ToggleVisibility*action7 = ToggleVisibility::create();
-		//Repeat*action2 = Repeat::create(action1, 8);
-		sprite->runAction(action4);
+		experimental::AudioEngine::play2d("gun.mp3",true);
+		experimental::AudioEngine::play2d("Return to Me.mp3",true);
+
+		audioID = experimental::AudioEngine::play2d("gun.mp3", true);
+		//MoveTo*action1 = MoveTo::create(2.0f, Vec2(600.0f, 300.0f));
+		//JumpTo*action2 = JumpTo::create(0.5f, Vec2(100.0f, 100.0f), 100.0f, 1);
+		//RepeatForever*action3 = RepeatForever::create(action1);
+		////TintTo*action3 = TintTo::create(2.0f, Color3B(255, 255, 0));
+		////Spawn*action4 = Spawn::create(action2, action3, nullptr);
+		//Sequence*action4 = Sequence::create(action1, action3, nullptr);
+		//DelayTime*action6 = DelayTime::create(3);
+		//ToggleVisibility*action7 = ToggleVisibility::create();
+		////Repeat*action2 = Repeat::create(action1, 8);
+		//sprite->runAction(action4);
 
 
 	//	MoveBy*action1 = MoveBy::create(1.0f, Vec2(300, 300));
@@ -196,7 +202,7 @@ bool HelloWorld::init()
 	//sprite->setTextureRect(Rect(0, 0, 32, 40));
 
 	//Updateを有効にする
-	//this->scheduleUpdate();
+	this->scheduleUpdate();
 
 	//counter = 0;
 
@@ -215,5 +221,12 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 
 void HelloWorld::update(float delta)
 {
-
+	counters--;
+	if (counters <= 0)
+	{
+		// 割り振られたオーディオIDを指定して止める
+		experimental::AudioEngine::stopAll();
+		experimental::AudioEngine::play2d("Hollow Crown.mp3", true);
+		counters = 100000000;
+	}
 }
