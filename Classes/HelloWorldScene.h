@@ -43,9 +43,11 @@ public:
 
 	void myFunction2(std::string filename);//ŠÖ”éŒ¾
     
-	void myFunction3(int count);
+	void myFunction3();
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+
+	int mario;
 
 
 	cocos2d::Sprite*sprite;
